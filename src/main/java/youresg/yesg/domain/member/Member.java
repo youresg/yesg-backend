@@ -1,14 +1,14 @@
-package youresg.yesg.member.domain;
+package youresg.yesg.domain.member;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import youresg.yesg.board.domain.Board;
-import youresg.yesg.board.domain.Comment;
-import youresg.yesg.record.domain.Record;
-import youresg.yesg.score.domain.Score;
+import youresg.yesg.domain.board.Board;
+import youresg.yesg.domain.comment.Comment;
+import youresg.yesg.domain.record.Record;
+import youresg.yesg.domain.score.Score;
 
 import java.util.List;
 

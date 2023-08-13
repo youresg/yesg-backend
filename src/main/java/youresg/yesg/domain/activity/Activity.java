@@ -1,10 +1,12 @@
-package youresg.yesg.record.domain;
+package youresg.yesg.domain.activity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import youresg.yesg.domain.record.EsgType;
+import youresg.yesg.domain.record.Record;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;

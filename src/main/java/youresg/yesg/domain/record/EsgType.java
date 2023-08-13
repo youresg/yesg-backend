@@ -1,4 +1,4 @@
-package youresg.yesg.record.domain;
+package youresg.yesg.domain.record;
 
 public enum EsgType {
     ENVIRONMENT, SOCIAL, GOVERNANCE

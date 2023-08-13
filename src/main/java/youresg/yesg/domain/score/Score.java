@@ -1,11 +1,11 @@
-package youresg.yesg.score.domain;
+package youresg.yesg.domain.score;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import youresg.yesg.member.domain.Member;
+import youresg.yesg.domain.member.Member;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
