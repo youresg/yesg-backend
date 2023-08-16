@@ -8,7 +8,6 @@ import lombok.NoArgsConstructor;
 import youresg.yesg.domain.board.Board;
 import youresg.yesg.domain.comment.Comment;
 import youresg.yesg.domain.record.Record;
-import youresg.yesg.domain.score.Score;
 
 import java.util.List;
 
@@ -44,8 +43,8 @@ public class Member {
     @Enumerated
     private SocialProvider socialProvider;
 
-    @OneToMany(mappedBy = "member")
-    private List<Score> scoreList;
+    @Embedded
+    private Score score;
 
     @OneToMany(mappedBy = "member")
     private List<Record> recordList;
