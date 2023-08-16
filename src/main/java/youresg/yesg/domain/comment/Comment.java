@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import youresg.yesg.component.auditing.BaseEntity;
 import youresg.yesg.domain.board.Board;
 import youresg.yesg.domain.member.Member;
 
@@ -16,7 +17,7 @@ import static lombok.AccessLevel.*;
 @AllArgsConstructor
 @Builder
 @Entity
-public class Comment {
+public class Comment extends BaseEntity {
 
     @Id
     @GeneratedValue
