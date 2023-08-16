@@ -32,6 +32,12 @@ public class Member {
 
     private String profileImg;
 
+    private String bio;
+
+    private String company;
+
+    private String location;
+
     @Enumerated
     private Role role;
 

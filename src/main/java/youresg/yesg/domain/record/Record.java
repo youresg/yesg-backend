@@ -29,7 +29,7 @@ public class Record {
     @JoinColumn(name = "member_id")
     private Member member;
 
-    private String diary;
+    private String description;
 
     @OneToMany(mappedBy = "record")
     private List<Activity> activityList;

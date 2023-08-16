@@ -30,7 +30,11 @@ public class Board {
     @JoinColumn(name = "member_id")
     private Member member;
 
+    private String title;
+
     private String content;
+
+    private int view_count;
 
     @OneToMany(mappedBy = "board")
     private List<Comment> commentList;

@@ -23,9 +23,7 @@ public class Activity {
     @Column(name = "activity_id")
     private Long id;
 
-    private String title;
-
-    private String description;
+    private String name;
 
     private int score;
 
