@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import static jakarta.persistence.EnumType.*;
 import static lombok.AccessLevel.*;
 
 @Getter
@@ -18,7 +19,7 @@ public class Score {
     private int g;
     private int total;
 
-    @Enumerated
+    @Enumerated(STRING)
     private Grade grade;
 
 }

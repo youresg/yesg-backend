@@ -6,9 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import youresg.yesg.component.auditing.BaseEntity;
-import youresg.yesg.domain.record.EsgType;
 import youresg.yesg.domain.record.Record;
 
+import static jakarta.persistence.EnumType.*;
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
@@ -28,7 +28,7 @@ public class Activity extends BaseEntity {
 
     private int score;
 
-    @Enumerated
+    @Enumerated(STRING)
     private EsgType esgType;
 
     @ManyToOne(fetch = LAZY)

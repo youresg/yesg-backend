@@ -12,6 +12,7 @@ import youresg.yesg.domain.record.Record;
 
 import java.util.List;
 
+import static jakarta.persistence.EnumType.*;
 import static lombok.AccessLevel.*;
 
 @Getter
@@ -38,10 +39,10 @@ public class Member extends BaseEntity {
 
     private String location;
 
-    @Enumerated
+    @Enumerated(STRING)
     private Role role;
 
-    @Enumerated
+    @Enumerated(STRING)
     private SocialProvider socialProvider;
 
     @Embedded
