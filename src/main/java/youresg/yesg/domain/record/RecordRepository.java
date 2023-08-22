@@ -1,4 +1,4 @@
-package youresg.yesg.repository;
+package youresg.yesg.domain.record;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import youresg.yesg.domain.record.Record;

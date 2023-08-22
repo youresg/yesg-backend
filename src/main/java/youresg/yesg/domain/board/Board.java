@@ -9,6 +9,7 @@ import youresg.yesg.component.auditing.BaseEntity;
 import youresg.yesg.domain.comment.Comment;
 import youresg.yesg.domain.member.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
@@ -39,5 +40,11 @@ public class Board extends BaseEntity {
 
     @OneToMany(mappedBy = "board")
     private List<Comment> commentList;
+
+    @OneToMany(mappedBy = "board")
+    private List<Heart> heartList;
+
+    @OneToMany(mappedBy = "board")
+    private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
 }

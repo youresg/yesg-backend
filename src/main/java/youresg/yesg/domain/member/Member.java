@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import youresg.yesg.component.auditing.BaseEntity;
 import youresg.yesg.domain.board.Board;
+import youresg.yesg.domain.board.Heart;
 import youresg.yesg.domain.comment.Comment;
 import youresg.yesg.domain.record.Record;
 
@@ -39,6 +40,8 @@ public class Member extends BaseEntity {
 
     private String location;
 
+    private Boolean isPublic;
+
     @Enumerated(STRING)
     private Role role;
 
@@ -56,5 +59,8 @@ public class Member extends BaseEntity {
 
     @OneToMany(mappedBy = "member")
     private List<Comment> commentList;
+
+    @OneToMany(mappedBy = "member")
+    private List<Heart> heartList;
 
 }
