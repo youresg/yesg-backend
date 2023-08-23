@@ -12,6 +12,7 @@ import youresg.yesg.domain.member.Member;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
 
@@ -36,15 +37,15 @@ public class Board extends BaseEntity {
 
     private String content;
 
-    private int view_count;
+    private int viewCount;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<Comment> commentList;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<Heart> heartList;
 
-    @OneToMany(mappedBy = "board")
+    @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
 }

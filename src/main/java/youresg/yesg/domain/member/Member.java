@@ -13,6 +13,7 @@ import youresg.yesg.domain.record.Record;
 
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.*;
 import static lombok.AccessLevel.*;
 
@@ -51,16 +52,16 @@ public class Member extends BaseEntity {
     @Embedded
     private Score score;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Record> recordList;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Board> boardList;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Comment> commentList;
 
-    @OneToMany(mappedBy = "member")
+    @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Heart> heartList;
 
 }

@@ -10,6 +10,7 @@ import youresg.yesg.component.auditing.BaseEntity;
 import java.util.ArrayList;
 import java.util.List;
 
+import static jakarta.persistence.CascadeType.ALL;
 import static lombok.AccessLevel.PROTECTED;
 
 @Getter
@@ -26,7 +27,7 @@ public class Hashtag extends BaseEntity {
     @Column(nullable = false)
     private String tagName;
 
-    @OneToMany(mappedBy = "hashtag")
+    @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
 }
