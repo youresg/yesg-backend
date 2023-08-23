@@ -1,7 +1,14 @@
 package youresg.yesg.service;
 
-import org.springframework.stereotype.Service;
+import youresg.yesg.dto.board.HeartDto;
+import youresg.yesg.dto.member.MemberDto;
 
-@Service
-public class IHeartService {
+import java.util.List;
+
+public interface IHeartService {
+
+    Boolean findHeart(HeartDto heartDto);
+    Boolean saveHeart(HeartDto heartDto);
+    List<MemberDto> findHeartedMembersByBoardId(Long boardId);
+
 }

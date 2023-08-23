@@ -1,7 +1,11 @@
 package youresg.yesg.service;
 
-import org.springframework.stereotype.Service;
+import youresg.yesg.dto.comment.CommentDto;
 
-@Service
-public class ICommentService {
+public interface ICommentService {
+
+    CommentDto createComment(CommentDto commentDto);
+    CommentDto updateComment(Long commentId, CommentDto updatedComment);
+    void deleteComment(Long commentId);
+
 }

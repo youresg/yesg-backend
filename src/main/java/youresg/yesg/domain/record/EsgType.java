@@ -1,4 +1,4 @@
-package youresg.yesg.domain.activity;
+package youresg.yesg.domain.record;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

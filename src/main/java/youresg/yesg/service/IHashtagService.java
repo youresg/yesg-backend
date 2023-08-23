@@ -1,7 +1,14 @@
 package youresg.yesg.service;
 
-import org.springframework.stereotype.Service;
+import youresg.yesg.dto.board.BoardDto;
+import youresg.yesg.dto.board.HashtagDto;
 
-@Service
-public class IHashtagService {
+import java.util.List;
+
+public interface IHashtagService {
+
+    List<BoardDto> findAllBoardsByHashtagId(Long hashtagId);
+    HashtagDto createHashtag(HashtagDto hashtagDto);
+    void deleteHashtag(Long hashtagId);
+
 }

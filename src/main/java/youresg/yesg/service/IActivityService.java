@@ -1,7 +1,11 @@
 package youresg.yesg.service;
 
-import org.springframework.stereotype.Service;
+import youresg.yesg.dto.record.ActivityDto;
 
-@Service
-public class IActivityService {
+import java.util.List;
+
+public interface IActivityService {
+
+    List<ActivityDto> findAllActivities();
+
 }

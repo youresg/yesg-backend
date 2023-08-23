@@ -1,7 +1,13 @@
 package youresg.yesg.service;
 
-import org.springframework.stereotype.Service;
+import youresg.yesg.dto.member.MemberDto;
 
-@Service
-public class IMemberService {
+import java.util.Optional;
+
+public interface IMemberService {
+
+    Optional<MemberDto> findMemberById(Long memberId);
+    Optional<MemberDto> findByUsername(String username);
+    MemberDto updateMember(Long memberId, MemberDto updatedMemberDto);
+
 }
