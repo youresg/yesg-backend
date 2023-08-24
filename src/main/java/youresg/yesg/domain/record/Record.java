@@ -6,9 +6,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import youresg.yesg.component.auditing.BaseEntity;
-import youresg.yesg.domain.activity.Activity;
 import youresg.yesg.domain.member.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.FetchType.*;
@@ -32,7 +32,8 @@ public class Record extends BaseEntity {
 
     private String description;
 
+    @Builder.Default
     @OneToMany(mappedBy = "record")
-    private List<Activity> activityList;
+    private List<Activity> activityList = new ArrayList<>();
 
 }

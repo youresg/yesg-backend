@@ -11,6 +11,7 @@ import youresg.yesg.domain.board.Heart;
 import youresg.yesg.domain.comment.Comment;
 import youresg.yesg.domain.record.Record;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static jakarta.persistence.CascadeType.*;
@@ -52,16 +53,20 @@ public class Member extends BaseEntity {
     @Embedded
     private Score score;
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
-    private List<Record> recordList;
+    private List<Record> recordList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
-    private List<Board> boardList;
+    private List<Board> boardList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
-    private List<Comment> commentList;
+    private List<Comment> commentList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
-    private List<Heart> heartList;
+    private List<Heart> heartList = new ArrayList<>();
 
 }

@@ -39,12 +39,15 @@ public class Board extends BaseEntity {
 
     private int viewCount;
 
+    @Builder.Default
     @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
-    private List<Comment> commentList;
+    private List<Comment> commentList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
-    private List<Heart> heartList;
+    private List<Heart> heartList = new ArrayList<>();
 
+    @Builder.Default
     @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 

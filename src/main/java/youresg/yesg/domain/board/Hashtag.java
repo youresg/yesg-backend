@@ -27,7 +27,8 @@ public class Hashtag extends BaseEntity {
     @Column(nullable = false)
     private String tagName;
 
-    @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
+    @Builder.Default
+    @OneToMany(mappedBy = "hashtag", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
 }
