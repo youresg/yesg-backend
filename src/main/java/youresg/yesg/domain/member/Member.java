@@ -1,10 +1,7 @@
 package youresg.yesg.domain.member;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import youresg.yesg.component.auditing.BaseEntity;
 import youresg.yesg.domain.board.Board;
 import youresg.yesg.domain.board.Heart;
@@ -18,6 +15,7 @@ import static jakarta.persistence.CascadeType.*;
 import static jakarta.persistence.EnumType.*;
 import static lombok.AccessLevel.*;
 
+@ToString(of = {"id", "username", "email", "profileImg", "bio", "company", "location", "isPublic", "role", "socialProvider"})
 @Getter
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor
@@ -42,16 +40,19 @@ public class Member extends BaseEntity {
 
     private String location;
 
-    private Boolean isPublic;
+    @Builder.Default
+    private Boolean isPublic = Boolean.TRUE;
 
+    @Builder.Default
     @Enumerated(STRING)
-    private Role role;
+    private Role role = Role.GUEST;
 
     @Enumerated(STRING)
     private SocialProvider socialProvider;
 
+    @Builder.Default
     @Embedded
-    private Score score;
+    private Score score = new Score(0, 0, 0, 0, Grade.WHITE);
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
@@ -68,5 +69,13 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Heart> heartList = new ArrayList<>();
+
+    public Member updateProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+        return this;
+    }
+    public void updateRoleKey(Role role) {
+        this.role = role;
+    }
 
 }

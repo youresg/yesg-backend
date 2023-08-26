@@ -1,11 +1,10 @@
 package youresg.yesg.config.auth;
 
-import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
+import youresg.yesg.domain.member.*;
 
-import java.util.HashMap;
 import java.util.Map;
 
 import static lombok.AccessLevel.PRIVATE;
@@ -17,11 +16,11 @@ class OAuth2Attribute {
     private Map<String, Object> attributes;
     private String attributeKey;
     private String email;
-    private String name;
-    private String picture;
+    private String username;
+    private String profileImg;
+    private SocialProvider socialProvider;
 
-    static OAuth2Attribute of(String provider, String attributeKey,
-                              Map<String, Object> attributes) {
+    static OAuth2Attribute of(String provider, String attributeKey, Map<String, Object> attributes) {
         switch (provider) {
             case "google":
                 return ofGoogle(attributeKey, attributes);
@@ -34,52 +33,50 @@ class OAuth2Attribute {
         }
     }
 
-    private static OAuth2Attribute ofGoogle(String attributeKey,
-                                            Map<String, Object> attributes) {
+    private static OAuth2Attribute ofGoogle(String attributeKey, Map<String, Object> attributes) {
         return OAuth2Attribute.builder()
-                .name((String) attributes.get("name"))
-                .email((String) attributes.get("email"))
-                .picture((String)attributes.get("picture"))
                 .attributes(attributes)
                 .attributeKey(attributeKey)
+                .email((String) attributes.get("email"))
+                .username((String) attributes.get("name"))
+                .profileImg((String) attributes.get("picture"))
+                .socialProvider(SocialProvider.GOOGLE)
                 .build();
     }
 
-    private static OAuth2Attribute ofKakao(String attributeKey,
-                                           Map<String, Object> attributes) {
+    private static OAuth2Attribute ofKakao(String attributeKey, Map<String, Object> attributes) {
         Map<String, Object> kakaoAccount = (Map<String, Object>) attributes.get("kakao_account");
         Map<String, Object> kakaoProfile = (Map<String, Object>) kakaoAccount.get("profile");
 
         return OAuth2Attribute.builder()
-                .name((String) kakaoProfile.get("nickname"))
-                .email((String) kakaoAccount.get("email"))
-                .picture((String)kakaoProfile.get("profile_image_url"))
                 .attributes(kakaoAccount)
                 .attributeKey(attributeKey)
+                .email((String) kakaoAccount.get("email"))
+                .username((String) kakaoProfile.get("nickname"))
+                .profileImg((String) kakaoProfile.get("profile_image_url"))
+                .socialProvider(SocialProvider.KAKAO)
                 .build();
     }
 
-    private static OAuth2Attribute ofNaver(String attributeKey,
-                                           Map<String, Object> attributes) {
+    private static OAuth2Attribute ofNaver(String attributeKey, Map<String, Object> attributes) {
         Map<String, Object> response = (Map<String, Object>) attributes.get("response");
 
         return OAuth2Attribute.builder()
-                .name((String) response.get("name"))
-                .email((String) response.get("email"))
-                .picture((String) response.get("profile_image"))
                 .attributes(response)
                 .attributeKey(attributeKey)
+                .email((String) response.get("email"))
+                .username((String) response.get("name"))
+                .profileImg((String) response.get("profile_image"))
+                .socialProvider(SocialProvider.NAVER)
                 .build();
     }
 
-    Map<String, Object> convertToMap() {
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", attributeKey);
-        map.put("key", attributeKey);
-        map.put("name", name);
-        map.put("email", email);
-        map.put("picture", picture);
-
-        return map;
+    public Member toEntity() {
+        return Member.builder()
+                .username(username)
+                .email(email)
+                .profileImg(profileImg)
+                .socialProvider(socialProvider)
+                .build();
     }
 }

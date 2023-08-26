@@ -8,8 +8,12 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import youresg.yesg.config.auth.CustomOAuth2UserService;
 import youresg.yesg.config.auth.OAuth2SuccessHandler;
+import youresg.yesg.config.jwt.JwtAuthFilter;
+import youresg.yesg.config.jwt.JwtTokenProvider;
+import youresg.yesg.domain.member.MemberRepository;
 
 @RequiredArgsConstructor
 @EnableWebSecurity
@@ -18,12 +22,14 @@ public class SecurityConfig {
 
     private final CustomOAuth2UserService oAuth2UserService;
     private final OAuth2SuccessHandler successHandler;
+    private final JwtTokenProvider jwtTokenProvider;
+    private final MemberRepository memberRepository;
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
                 .csrf(csrf ->
-                        csrf.disable()  // JWT -> STATELESS 하므로 CSRF 옵션 해제
+                        csrf.disable()
                 )
                 .headers((headerConfig) ->
                         headerConfig.frameOptions(frameOptionsConfig ->
@@ -49,6 +55,7 @@ public class SecurityConfig {
                                 .successHandler(successHandler)
                                 .userInfoEndpoint(Customizer.withDefaults())
                 )
+                .addFilterBefore(new JwtAuthFilter(jwtTokenProvider, memberRepository), UsernamePasswordAuthenticationFilter.class)
                 .logout((logoutConfig) ->
                         logoutConfig.logoutSuccessUrl("/")
                 );

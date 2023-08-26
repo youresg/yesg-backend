@@ -7,6 +7,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
+import youresg.yesg.domain.member.Role;
+import youresg.yesg.domain.member.SocialProvider;
 
 import java.security.Key;
 import java.util.Date;
@@ -20,12 +22,13 @@ public class JwtTokenProvider {
         secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
     }
 
-    public JwtToken generateToken(String uid, String role) {
+    public JwtToken generateToken(String uid, SocialProvider socialProvider, Role role) {
         long tokenPeriod = 1000L * 60L * 10L;
         long refreshPeriod = 1000L * 60L * 60L * 24L * 30L * 3L;
 
         Claims claims = Jwts.claims().setSubject(uid);
         claims.put("role", role);
+        claims.put("socialProvider", socialProvider);
 
         Date now = new Date();
         return new JwtToken(
@@ -65,4 +68,14 @@ public class JwtTokenProvider {
                 .getBody()
                 .getSubject();
     }
+
+    public SocialProvider getSocialProvider(String token) {
+        return SocialProvider.valueOf((String) Jwts.parserBuilder()
+                .setSigningKey(secretKey)
+                .build()
+                .parseClaimsJws(token)
+                .getBody()
+                .get("socialProvider"));
+    }
+
 }

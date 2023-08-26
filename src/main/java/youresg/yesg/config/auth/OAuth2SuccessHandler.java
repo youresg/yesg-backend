@@ -13,6 +13,7 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 import org.springframework.stereotype.Component;
 import youresg.yesg.config.jwt.JwtToken;
 import youresg.yesg.config.jwt.JwtTokenProvider;
+import youresg.yesg.domain.member.Role;
 
 import java.io.IOException;
 
@@ -28,8 +29,8 @@ public class OAuth2SuccessHandler implements AuthenticationSuccessHandler {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
         OAuth2UserDto oAuth2UserDto = OAuth2UserDto.toDto(oAuth2User);
 
-        JwtToken jwtToken = jwtTokenProvider.generateToken(oAuth2UserDto.getEmail(), "USER");
-        log.info("{}", jwtToken);
+        JwtToken jwtToken = jwtTokenProvider.generateToken(oAuth2UserDto.getEmail(), oAuth2UserDto.getSocialProvider(), Role.MEMBER);
+        log.info("jwtToken = {}", jwtToken);
 
         writeTokenResponse(response, jwtToken);
     }
