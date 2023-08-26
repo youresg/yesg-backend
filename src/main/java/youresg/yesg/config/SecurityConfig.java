@@ -47,8 +47,16 @@ public class SecurityConfig {
                 )
                 .oauth2Login(oauth2LoginConfigurer ->
                         oauth2LoginConfigurer
-                                .userInfoEndpoint(userInfoEndpointConfigurer ->
-                                        userInfoEndpointConfigurer
+                                .authorizationEndpoint(authorizationEndpointConfig ->
+                                        authorizationEndpointConfig
+                                                .baseUri("/oauth2/authorization")
+                                )
+                                .redirectionEndpoint(redirectionEndpointConfig ->
+                                        redirectionEndpointConfig
+                                                .baseUri("/oauth2/callback/**")
+                                )
+                                .userInfoEndpoint(userInfoEndpointConfig ->
+                                        userInfoEndpointConfig
                                                 .userService(oAuth2UserService)
 
                                 )

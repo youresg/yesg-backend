@@ -30,14 +30,10 @@ public class JwtAuthFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("JwtAuthFilter doFilter");
-        String token = ((HttpServletRequest) request).getHeader("Auth");
-        if (token == null) {
-            log.info("Token is null");
-        } else if (jwtTokenProvider.verifyToken(token)) {
-            log.info("Token verifying failed");
-        }
 
-        if (token != null && jwtTokenProvider.verifyToken(token)) {
+        String token = ((HttpServletRequest) request).getHeader("Auth");
+
+        if (token != null && jwtTokenProvider.validateToken(token)) {
             log.info("Token verified");
             String email = jwtTokenProvider.getUid(token);
             SocialProvider socialProvider = jwtTokenProvider.getSocialProvider(token);
