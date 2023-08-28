@@ -10,6 +10,7 @@ import youresg.yesg.domain.board.Board;
 import youresg.yesg.domain.board.Heart;
 import youresg.yesg.domain.comment.Comment;
 import youresg.yesg.domain.record.Record;
+import youresg.yesg.dto.member.MemberDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,8 +51,9 @@ public class Member extends BaseEntity {
     @Enumerated(STRING)
     private SocialProvider socialProvider;
 
+    @Builder.Default
     @Embedded
-    private Score score;
+    private Score score = new Score(0, 0, 0, 0, Grade.WHITE);
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
@@ -68,5 +70,14 @@ public class Member extends BaseEntity {
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)
     private List<Heart> heartList = new ArrayList<>();
+
+    public void updateMemberInfo(MemberDto updatedMemberDto) {
+        this.username = updatedMemberDto.getUsername();
+        this.profileImg = updatedMemberDto.getProfileImg();
+        this.bio = updatedMemberDto.getBio();
+        this.company = updatedMemberDto.getCompany();
+        this.location = updatedMemberDto.getLocation();
+        this.isPublic = updatedMemberDto.getIsPublic();
+    }
 
 }
