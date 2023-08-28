@@ -72,12 +72,12 @@ public class Member extends BaseEntity {
     private List<Heart> heartList = new ArrayList<>();
 
     public void updateMemberInfo(MemberDto updatedMemberDto) {
-        this.username = updatedMemberDto.getUsername();
-        this.profileImg = updatedMemberDto.getProfileImg();
-        this.bio = updatedMemberDto.getBio();
-        this.company = updatedMemberDto.getCompany();
-        this.location = updatedMemberDto.getLocation();
-        this.isPublic = updatedMemberDto.getIsPublic();
+        if (updatedMemberDto.getUsername() != null) this.username = updatedMemberDto.getUsername();
+        if (updatedMemberDto.getProfileImg() != null) this.profileImg = updatedMemberDto.getProfileImg();
+        if (updatedMemberDto.getBio() != null) this.bio = updatedMemberDto.getBio();
+        if (updatedMemberDto.getCompany() != null) this.company = updatedMemberDto.getCompany();
+        if (updatedMemberDto.getLocation() != null) this.location = updatedMemberDto.getLocation();
+        if (updatedMemberDto.getIsPublic() != null) this.isPublic = updatedMemberDto.getIsPublic();
     }
 
 }
