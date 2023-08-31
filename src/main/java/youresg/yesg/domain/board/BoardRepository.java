@@ -9,8 +9,6 @@ import java.util.List;
 @Repository
 public interface BoardRepository extends JpaRepository<Board, Long> {
 
-    @Query("SELECT b FROM Board b ORDER BY b.id DESC")
-    List<Board> findAllDesc();
 
     @Query("SELECT b FROM Board b where b.title LIKE %:keyword%")
     List<Board> findBySearch(String keyword);
