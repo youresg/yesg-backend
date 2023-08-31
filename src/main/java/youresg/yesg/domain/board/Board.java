@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import youresg.yesg.component.auditing.BaseEntity;
 import youresg.yesg.domain.comment.Comment;
 import youresg.yesg.domain.member.Member;
+import youresg.yesg.dto.board.BoardDto;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -51,4 +52,15 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
+//    public static Board createBoard(String title, String content, Member member, List<BoardHashtag> hashtags) {
+//        return Board.builder()
+//                .title(title).content(content).member(member).boardHashtagList(hashtags)
+//                .build();
+//    }
+
+    public void update(BoardDto updateDto){
+        if (updateDto.getTitle() != null) this.title = updateDto.getTitle();
+        if (updateDto.getContent() != null) this.content = updateDto.getContent();
+        if (updateDto.getHashtags() != null) this.boardHashtagList = updateDto.getHashtags();
+    }
 }
