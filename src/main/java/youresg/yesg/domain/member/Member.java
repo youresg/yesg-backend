@@ -50,8 +50,9 @@ public class Member extends BaseEntity {
     @Enumerated(STRING)
     private SocialProvider socialProvider;
 
+    @Builder.Default
     @Embedded
-    private Score score;
+    private Score score = new Score(0, 0, 0, 0, Grade.WHITE);;
 
     @Builder.Default
     @OneToMany(mappedBy = "member", cascade = ALL, orphanRemoval = true)

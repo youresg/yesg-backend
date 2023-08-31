@@ -1,5 +1,6 @@
 package youresg.yesg.service;
 
+import jakarta.persistence.EntityManager;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -7,9 +8,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import youresg.yesg.component.DatabaseCleaner;
 import youresg.yesg.domain.board.Board;
+import youresg.yesg.domain.board.BoardHashtag;
 import youresg.yesg.domain.board.BoardRepository;
-import youresg.yesg.domain.board.Hashtag;
+import youresg.yesg.domain.member.Member;
 import youresg.yesg.domain.member.MemberRepository;
+import youresg.yesg.domain.member.SocialProvider;
 import youresg.yesg.dto.board.BoardDto;
 import youresg.yesg.dto.board.BoardSearchDto;
 
@@ -18,7 +21,6 @@ import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertNull;
 
 
 @SpringBootTest
@@ -30,6 +32,7 @@ public class BoardServiceTest {
     BoardRepository boardRepository;
     @Autowired IBoardService boardService;
     @Autowired MemberRepository memberRepository;
+
 
     private Board board1;
     private Board board2;
@@ -116,10 +119,29 @@ public class BoardServiceTest {
     @Test
     void createBoard(){
         //given
+        Member member = Member.builder().username("member1")
+                .email("test1@gmail.com")
+                .socialProvider(SocialProvider.GOOGLE)
+                .bio("Hello world !")
+                .company("Sejong Univ.")
+                .location("Seoul, Republic of Korea")
+                .build();
+        memberRepository.save(member);
+
+        String title = "테스트 제목1";
+        String content = "테스트 본문1";
+
+        BoardDto boardDto = BoardDto.builder()
+                .title(title)
+                .content(content)
+                .build();
+
         //when
-        //BoardDto boardDto = boardService.createBoard();
+        BoardDto createBoardDto= boardService.createBoard(boardDto, member.getId());
 
         //then
+        assertThat(createBoardDto.getTitle()).isEqualTo(title);
+        assertThat(createBoardDto.getContent()).isEqualTo(content);
     }
     @Test
     void updateBoard(){
