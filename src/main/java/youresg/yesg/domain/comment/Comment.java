@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import youresg.yesg.component.auditing.BaseEntity;
 import youresg.yesg.domain.board.Board;
 import youresg.yesg.domain.member.Member;
+import youresg.yesg.dto.comment.CommentDto;
 
 import static jakarta.persistence.FetchType.*;
 import static lombok.AccessLevel.*;
@@ -34,4 +35,13 @@ public class Comment extends BaseEntity {
 
     private String content;
 
+    public static Comment createComment(String content, Member member) {
+        return Comment.builder()
+                .content(content).member(member)
+                .build();
+    }
+
+    public void update(CommentDto updatedComment) {
+        if (updatedComment.getContent() != null) this.content = updatedComment.getContent();
+    }
 }
