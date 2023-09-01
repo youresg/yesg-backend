@@ -10,10 +10,14 @@ public interface IBoardService {
 
     List<BoardDto> findAllBoards();
     List<BoardDto> findAllBoardsBySearch(BoardSearchDto boardSearchDto);
-    List<BoardDto> findAllBoardsByHashtagId(String tagName);
-    Optional<BoardDto> findBoardById(Long boardId);
-    BoardDto createBoard(BoardDto boardDto, Long memberId);
-    BoardDto updateBoard(Long boardId, BoardDto boardDto);
-    void deleteBoard(Long boardId);
+    List<BoardDto> findAllBoardsByHashtagName(String tagName);
 
-}
+    Optional<BoardDto> findBoardById(Long boardId);
+    BoardDto saveHashtag(Board board, String hashtag);
+    BoardDto createBoard (BoardDto boardDto, Long memberId);
+    BoardDto updateBoard(Long boardId, BoardDto updateBoardDto);
+    void deleteBoard(Long boardId);
+    void updateHashtag(Board board, BoardDto updatedBoardDto);
+
+
+    }

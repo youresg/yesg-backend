@@ -29,4 +29,8 @@ public class BoardHashtag extends BaseEntity {
     @JoinColumn(name = "hashtag_id")
     private Hashtag hashtag;
 
+    public void addEntity(Board board, Hashtag hashtag){
+        this.board = board;
+        this.hashtag = hashtag;
+    }
 }

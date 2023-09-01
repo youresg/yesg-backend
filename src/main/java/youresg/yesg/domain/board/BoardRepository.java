@@ -14,5 +14,5 @@ public interface BoardRepository extends JpaRepository<Board, Long> {
     List<Board> findBySearch(String keyword);
 
     @Query("SELECT DISTINCT b FROM Board b JOIN b.boardHashtagList h WHERE h.hashtag = :tagName")
-    List<Board> findByHashtag(String tagName);
+    List<Board> findByName(String tagName);
 }

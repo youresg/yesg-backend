@@ -52,15 +52,15 @@ public class Board extends BaseEntity {
     @OneToMany(mappedBy = "board", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
-//    public static Board createBoard(String title, String content, Member member, List<BoardHashtag> hashtags) {
-//        return Board.builder()
-//                .title(title).content(content).member(member).boardHashtagList(hashtags)
-//                .build();
-//    }
 
-    public void update(BoardDto updateDto){
-        if (updateDto.getTitle() != null) this.title = updateDto.getTitle();
-        if (updateDto.getContent() != null) this.content = updateDto.getContent();
-        if (updateDto.getHashtags() != null) this.boardHashtagList = updateDto.getHashtags();
+    public void update(BoardDto updatedBoardDto){
+        if (updatedBoardDto.getTitle() != null) this.title = updatedBoardDto.getTitle();
+        if (updatedBoardDto.getContent() != null) this.content = updatedBoardDto.getContent();
+        //if (updatedBoardDto.getHashtags() != null) this.boardHashtagList = updatedBoardDto.getBoardHashtags();
+
+    }
+    public void addEntity(BoardHashtag boardHashtags){
+
+        this.boardHashtagList.add(boardHashtags);
     }
 }
