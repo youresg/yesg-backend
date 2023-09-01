@@ -31,4 +31,7 @@ public class Hashtag extends BaseEntity {
     @OneToMany(mappedBy = "hashtag", cascade = ALL, orphanRemoval = true)
     private List<BoardHashtag> boardHashtagList = new ArrayList<>();
 
+    public void addEntity(BoardHashtag boardHashtags){
+        this.boardHashtagList.add(boardHashtags);
+    }
 }
