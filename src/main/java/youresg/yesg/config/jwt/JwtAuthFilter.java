@@ -26,32 +26,38 @@ import java.util.Arrays;
 public class JwtAuthFilter extends GenericFilterBean {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
+    private final TokenBlackListRepository tokenBlackListRepository;
+
 
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         log.info("JwtAuthFilter doFilter");
 
-        String token = ((HttpServletRequest) request).getHeader("Auth");
+        String token = ((HttpServletRequest) request).getHeader("Authorization");
 
-        if (token != null && jwtTokenProvider.validateToken(token)) {
-            log.info("Token verified");
-            String email = jwtTokenProvider.getUid(token);
-            SocialProvider socialProvider = jwtTokenProvider.getSocialProvider(token);
+        if (token != null) {
+            if (token.startsWith("Bearer ")) {
+                token = token.substring(7);
+                if (jwtTokenProvider.validateToken(token) && !tokenBlackListRepository.existsById(token)) {
+                    log.info("Token verified");
+                    String email = jwtTokenProvider.getUid(token);
+                    SocialProvider socialProvider = jwtTokenProvider.getSocialProvider(token);
 
-            Member member = memberRepository.findByEmailAndSocialProvider(email, socialProvider).get();  // TODO 예외처리
+                    Member member = memberRepository.findByEmailAndSocialProvider(email, socialProvider).get();  // TODO 예외처리
 
-            OAuth2UserDto oAuth2UserDto = OAuth2UserDto.builder()
-                    .email(member.getEmail())
-                    .name(member.getUsername())
-                    .picture(member.getProfileImg())
-                    .socialProvider(member.getSocialProvider())
-                    .build();
-            log.info("oAuth2UserDto = {}", oAuth2UserDto);
+                    OAuth2UserDto oAuth2UserDto = OAuth2UserDto.builder()
+                            .email(member.getEmail())
+                            .name(member.getUsername())
+                            .picture(member.getProfileImg())
+                            .socialProvider(member.getSocialProvider())
+                            .build();
+                    log.info("oAuth2UserDto = {}", oAuth2UserDto);
 
-            Authentication auth = getAuthentication(oAuth2UserDto);
-            SecurityContextHolder.getContext().setAuthentication(auth);
+                    Authentication auth = getAuthentication(oAuth2UserDto);
+                    SecurityContextHolder.getContext().setAuthentication(auth);
+                }
+            }
         }
-
         chain.doFilter(request, response);
     }
 

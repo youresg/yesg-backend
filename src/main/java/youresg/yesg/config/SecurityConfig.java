@@ -13,6 +13,7 @@ import youresg.yesg.config.auth.CustomOAuth2UserService;
 import youresg.yesg.config.auth.OAuth2SuccessHandler;
 import youresg.yesg.config.jwt.JwtAuthFilter;
 import youresg.yesg.config.jwt.JwtTokenProvider;
+import youresg.yesg.config.jwt.TokenBlackListRepository;
 import youresg.yesg.domain.member.MemberRepository;
 
 @RequiredArgsConstructor
@@ -24,6 +25,7 @@ public class SecurityConfig {
     private final OAuth2SuccessHandler successHandler;
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
+    private final TokenBlackListRepository tokenBlackListRepository;
 
     @Bean
     protected SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -63,7 +65,7 @@ public class SecurityConfig {
                                 .successHandler(successHandler)
                                 .userInfoEndpoint(Customizer.withDefaults())
                 )
-                .addFilterBefore(new JwtAuthFilter(jwtTokenProvider, memberRepository), UsernamePasswordAuthenticationFilter.class)
+                .addFilterBefore(new JwtAuthFilter(jwtTokenProvider, memberRepository, tokenBlackListRepository), UsernamePasswordAuthenticationFilter.class)
                 .logout((logoutConfig) ->
                         logoutConfig.logoutSuccessUrl("/")
                 );

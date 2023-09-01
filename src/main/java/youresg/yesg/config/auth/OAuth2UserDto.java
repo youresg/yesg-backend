@@ -18,9 +18,10 @@ public class OAuth2UserDto {
     public static OAuth2UserDto toDto(OAuth2User oAuth2User) {
         var attributes = oAuth2User.getAttributes();
         return OAuth2UserDto.builder()
-                .email((String)attributes.get("email"))
-                .name((String)attributes.get("name"))
-                .picture((String)attributes.get("picture"))
+                .email((String) attributes.get("email"))
+                .name((String) attributes.get("name"))
+                .picture((String) attributes.get("picture"))
+                .socialProvider(SocialProvider.valueOf(attributes.get("socialProvider").toString()))
                 .build();
     }
 }

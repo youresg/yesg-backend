@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import youresg.yesg.domain.member.Role;
 import youresg.yesg.domain.member.SocialProvider;
@@ -13,6 +14,7 @@ import youresg.yesg.domain.member.SocialProvider;
 import java.security.Key;
 import java.util.Date;
 
+@Slf4j
 @Service
 public class JwtTokenProvider {
     private Key secretKey;
@@ -29,6 +31,7 @@ public class JwtTokenProvider {
         Claims claims = Jwts.claims().setSubject(uid);
         claims.put("role", role);
         claims.put("socialProvider", socialProvider);
+        log.info("generateToken socialProvider = {}", socialProvider);
 
         Date now = new Date();
         return new JwtToken(

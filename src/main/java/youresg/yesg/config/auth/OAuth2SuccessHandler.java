@@ -27,6 +27,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
         OAuth2User oAuth2User = (OAuth2User)authentication.getPrincipal();
+
         OAuth2UserDto oAuth2UserDto = OAuth2UserDto.toDto(oAuth2User);
 
         JwtToken jwtToken = jwtTokenProvider.generateToken(oAuth2UserDto.getEmail(), oAuth2UserDto.getSocialProvider(), Role.MEMBER);

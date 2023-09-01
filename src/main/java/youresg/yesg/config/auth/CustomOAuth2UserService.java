@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import youresg.yesg.domain.member.Member;
 import youresg.yesg.domain.member.MemberRepository;
 import youresg.yesg.domain.member.Role;
+import youresg.yesg.domain.member.SocialProvider;
 
 import java.util.Collections;
 
@@ -33,10 +34,10 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
                 .getProviderDetails().getUserInfoEndpoint().getUserNameAttributeName();
 
         OAuth2Attribute oAuth2Attribute = OAuth2Attribute.of(registrationId, userNameAttributeName, oAuth2User.getAttributes());
-        log.info("oAuth2Attribute = {}", oAuth2Attribute);
 
         Member member = saveOrUpdate(oAuth2Attribute);
-        log.info("member = {}", member);
+
+        log.info("service attributes = {}", oAuth2Attribute.getAttributes());
 
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority(Role.MEMBER.getKey())),
@@ -46,7 +47,7 @@ public class CustomOAuth2UserService implements OAuth2UserService<OAuth2UserRequ
     }
 
     private Member saveOrUpdate(OAuth2Attribute attributes) {
-        Member member = memberRepository.findByEmailAndSocialProvider(attributes.getEmail(), attributes.getSocialProvider())
+        Member member = memberRepository.findByEmailAndSocialProvider(attributes.getEmail(), SocialProvider.valueOf(attributes.getAttributes().get("socialProvider").toString()))
                 .map(entity -> entity.updateProfileImg(attributes.getProfileImg()))
                 .orElse(attributes.toEntity());
         member.updateRoleKey(Role.MEMBER);
